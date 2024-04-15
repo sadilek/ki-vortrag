@@ -1,7 +1,21 @@
-import graphviz
-from IPython.display import SVG, display
 import os
+
+import graphviz
+import numpy as np
+import seaborn as sns
 import torch
+from IPython.display import SVG, display
+
+
+def plot_f(f, x_min=-10, x_max=10, n_points=100):
+    if f == torch.relu:
+        x = torch.linspace(x_min, x_max, n_points)
+        y = f(x)
+        sns.lineplot(x=x.numpy(), y=y.numpy())
+    else:
+        x = np.linspace(x_min, x_max, n_points)
+        y = [f(x) for x in x]
+        sns.lineplot(x=x, y=y)
 
 
 def edge_format(weight, max_weight):
@@ -24,7 +38,9 @@ def plot_network(sample, layers):
     for l in range(len(layers)):
         layer = layers[l]
         W, b = layer
-        x = torch.relu(W @ x + b)
+        x = W @ x + b
+        if l < len(layers) - 1:
+            x = torch.relu(x)
         max_weight = torch.max(torch.abs(W)).item()
         for i in range(len(x)):
             label = (
