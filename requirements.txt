@@ -1,0 +1,7 @@
+ipywidgets
+numpy
+pandas
+seaborn
+tensorflow
+torch
+transformers

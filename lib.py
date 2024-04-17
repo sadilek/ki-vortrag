@@ -71,3 +71,18 @@ def plot_network(sample, layers):
     os.remove("network.svg")
 
     return x
+
+
+def lookup_tokens(tokenizer, ids):
+    if type(ids) == int:
+        ids = [ids]
+    return [fix_encoding(tok) for tok in tokenizer.convert_ids_to_tokens(ids)]
+
+
+def fix_encoding(s: str):
+    def recode(s: str):
+        return str(bytes(s, "latin-1"), "utf-8")
+
+    if s.startswith("Ġ"):
+        return " " + recode(s[1:])
+    return recode(s)
