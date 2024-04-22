@@ -85,4 +85,6 @@ def fix_encoding(s: str):
 
     if s.startswith("Ġ"):
         return " " + recode(s[1:])
+    if s.startswith("Ċ"):
+        return "\n" + recode(s[1:])
     return recode(s)
