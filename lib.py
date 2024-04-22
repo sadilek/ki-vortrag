@@ -81,7 +81,10 @@ def lookup_tokens(tokenizer, ids):
 
 def fix_encoding(s: str):
     def recode(s: str):
-        return str(bytes(s, "latin-1"), "utf-8")
+        try:
+            return str(bytes(s, "latin-1"), "utf-8")
+        except:
+            return s
 
     if s.startswith("Ġ"):
         return " " + recode(s[1:])
